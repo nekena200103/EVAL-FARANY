@@ -54,6 +54,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -143,11 +144,12 @@ public class UtilisateurController {
               // Ajout d'une seule ligne avec des valeurs aléatoires
               String nomdupatient="";
             double totalapayer=0.0;
+            DecimalFormat format = new DecimalFormat("#,###.00");
             for (int i = 0; i < actesarray.size(); i++) {
                 Actes get = actesarray.get(i);
                 table.addCell(get.getDescription());
             table.addCell(get.getIdpatient().getNom());
-            table.addCell(""+get.getMontant()); // Montant aléatoire entre 0 et 100
+            table.addCell(format.format(get.getMontant())+" Ariary"); // Montant aléatoire entre 0 et 100
             table.addCell(Util.Util.translateDate((Date)get.getJour()));
             nomdupatient=get.getIdpatient().getNom();
             table.addCell(get.getIdtypeacte().getNom());
