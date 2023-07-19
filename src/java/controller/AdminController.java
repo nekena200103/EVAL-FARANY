@@ -56,6 +56,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -104,6 +105,7 @@ public class AdminController {
       @RequestMapping(value="/tableaudebord/{annee}/{month}")
     public String  tableaudebord (Model mod,@PathVariable int annee,@PathVariable int month) throws Exception{
         Typeacte actetype=new Typeacte();
+        DecimalFormat format = new DecimalFormat("#,###.00");
         ArrayList<Typeacte> typeacte=ent.find(actetype,"typeacte", Typeacte.class);
           Typecharge depensestype=new Typecharge();
         ArrayList<Typecharge> typecharge=ent.find(depensestype,"typecharge", Typecharge.class);
@@ -128,22 +130,23 @@ public class AdminController {
               pourcentage=(totalrecettes/totalbudget)*100;
               recettes=recettes+"<tr>\n" +
 "                          <th>"+typeacte.get(i).getNom()+"</th>\n" +
-"                          <th> "+totalrecettes+" Ariary</th>\n" +
-"                          <th> "+totalbudget+"  Ariary</th>\n" +
-"                          <th> "+Math.round(pourcentage)+"% </th>\n" +
+"                          <th> "+format.format(totalrecettes)+" Ariary</th>\n" +
+"                          <th> "+format.format(totalbudget)+"  Ariary</th>\n" +
+"                          <th> "+format.format(Math.round(pourcentage))+"% </th>\n" +
 "                        </tr>";
               
         }
          recettes=recettes+"<tr>\n" +
 "                          <th> </th>\n" +
-"                          <th> "+totalrecettesrehetra+" Ariary</th>\n" +
-"                          <th> "+totalbudgetrehetra+"  Ariary</th>\n" +
-"                          <th> "+Math.round(((totalrecettesrehetra/totalbudgetrehetra)*100))+"% </th>\n" +
+"                          <th> "+format.format(totalrecettesrehetra)+" Ariary</th>\n" +
+"                          <th> "+format.format(totalbudgetrehetra)+"  Ariary</th>\n" +
+"                          <th> "+format.format(Math.round(((totalrecettesrehetra/totalbudgetrehetra)*100)))+"% </th>\n" +
 "                        </tr>";
          Depenses depe=new Depenses();
          double totaldepensesrehetra=0;
         double totalbudgetrehetradep=0;
           for (int i = 0; i <typecharge.size(); i++) {
+              
               depe.setWhere(" where extract(month from jour)="+month+" and extract(year from jour)="+annee+"and idtypecharge='"+typecharge.get(i).getIdtypecharge()+"'");
               double totaldepenses=0;
               double totalbudget=typecharge.get(i).getBudgetannuel()/12;
@@ -159,34 +162,34 @@ public class AdminController {
               totaldepensesrehetra=totaldepensesrehetra+totaldepenses;
              depenses=depenses+"<tr>\n" +
 "                          <th>"+typecharge.get(i).getNom()+"</th>\n" +
-"                          <th> "+totaldepenses+" Ariary</th>\n" +
-"                          <th> "+totalbudget+"  Ariary</th>\n" +
+"                          <th> "+format.format(totaldepenses)+" Ariary</th>\n" +
+"                          <th> "+format.format(totalbudget)+"  Ariary</th>\n" +
 "                          <th> "+Math.round(pourcentage)+"% </th>\n" +
 "                        </tr>";
           }
           depenses=depenses+"<tr>\n" +
 "                          <th></th>\n" +
-"                          <th> "+totaldepensesrehetra+" Ariary</th>\n" +
-"                          <th> "+totalbudgetrehetradep+"  Ariary</th>\n" +
-"                          <th> "+Math.round(((totaldepensesrehetra/totalbudgetrehetradep)*100))+"% </th>\n" +
+"                          <th> "+format.format(totaldepensesrehetra)+" Ariary</th>\n" +
+"                          <th> "+format.format(totalbudgetrehetradep)+"  Ariary</th>\n" +
+"                          <th> "+format.format(Math.round(((totaldepensesrehetra/totalbudgetrehetradep)*100)))+"% </th>\n" +
 "                        </tr>";
           String benefice="<tr>\n" +
 "                          <th>Recettes</th>\n" +
-"                          <th> "+totalrecettesrehetra+" Ariary</th>\n" +
-"                          <th> "+totalbudgetrehetra+"  Ariary</th>\n" +
-"                          <th> "+Math.round(((totalrecettesrehetra/totalbudgetrehetra)*100))+"% </th>\n" +
+"                          <th> "+format.format(totalrecettesrehetra)+" Ariary</th>\n" +
+"                          <th> "+format.format(totalbudgetrehetra)+"  Ariary</th>\n" +
+"                          <th> "+format.format(Math.round(((totalrecettesrehetra/totalbudgetrehetra)*100)))+"% </th>\n" +
 "                        </tr>";
           benefice=benefice+"<tr>\n" +
 "                          <th>Depenses</th>\n" +
-"                          <th> "+totaldepensesrehetra+" Ariary</th>\n" +
-"                          <th> "+totalbudgetrehetradep+"  Ariary</th>\n" +
-"                          <th> "+Math.round(((totaldepensesrehetra/totalbudgetrehetradep)*100))+"% </th>\n" +
+"                          <th> "+format.format(totaldepensesrehetra)+" Ariary</th>\n" +
+"                          <th> "+format.format(totalbudgetrehetradep)+"  Ariary</th>\n" +
+"                          <th> "+format.format(Math.round(((totaldepensesrehetra/totalbudgetrehetradep)*100)))+"% </th>\n" +
 "                        </tr>";
           benefice=benefice+"<tr>\n" +
 "                          <th>Total</th>\n" +
-"                          <th> "+(totalrecettesrehetra-totaldepensesrehetra)+" Ariary</th>\n" +
-"                          <th> "+(totalbudgetrehetra-totalbudgetrehetradep)+"  Ariary</th>\n" +
-"                          <th> "+Math.round(((totalrecettesrehetra-totaldepensesrehetra)/(totalbudgetrehetra-totalbudgetrehetradep))*100)+"% </th>\n" +
+"                          <th> "+format.format((totalrecettesrehetra-totaldepensesrehetra))+" Ariary</th>\n" +
+"                          <th> "+format.format((totalbudgetrehetra-totalbudgetrehetradep))+"  Ariary</th>\n" +
+"                          <th> "+format.format(Math.round(((totalrecettesrehetra-totaldepensesrehetra)/(totalbudgetrehetra-totalbudgetrehetradep))*100))+"% </th>\n" +
 "                        </tr>";
           
        

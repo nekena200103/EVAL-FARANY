@@ -68,7 +68,7 @@
           <a href="<%= request.getContextPath() %>/typecharge/0" >
           <div class="col-md-2 d-flex align-self-stretch ftco-animate">
               <btn class="btn btn-light py-3 px-5">
-                <h3 class="heading mb-3">Typecharge</h3>
+                <h3 class="heading mb-3">Type de Depenses</h3>
                </btn>
             </div>      
           </a>

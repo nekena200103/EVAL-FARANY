@@ -19,6 +19,7 @@ import java.sql.Date;
 
 import java.lang.Object.*;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -488,7 +489,9 @@ public class ObjetDao  {
 						System.out.println(nombreargumments[e].getName());
 						for (int j = 0; j < methodclass.length; j++) {
 							if (methodclass[j].toString().toLowerCase().contains("set"+nombreargumments[e].getName().toLowerCase()+"")) {
-								
+								DecimalFormat format = new DecimalFormat("#,###");
+                                                               
+                                                               
 								methodclass[j].invoke(tabobj[i],Util.Util.arrondir(rs.getDouble(e+1)));
 								compteurvoampiditra++;
 							}

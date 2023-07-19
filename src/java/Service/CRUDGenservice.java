@@ -13,6 +13,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -91,9 +92,14 @@ public class CRUDGenservice {
                     htmlTable.append("<th>")
                              .append(Util.Util.translateDate((Date)value)) // conversion éventuelle en chaîne de caractères
                              .append("</th>");
+                    }else if(field.getType()==double.class){
+                         DecimalFormat format = new DecimalFormat("#,###.00");
+                    htmlTable.append("<th>")
+                             .append(format.format(value)) // conversion éventuelle en chaîne de caractères
+                             .append("</th>");
                     }else{
                     htmlTable.append("<th>")
-                             .append(value.toString()) // conversion éventuelle en chaîne de caractères
+                             .append(String.valueOf(value)) // conversion éventuelle en chaîne de caractères
                              .append("</th>");
                     }
                     
