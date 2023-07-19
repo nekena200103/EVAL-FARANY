@@ -62,10 +62,10 @@
                     <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" name="password" placeholder="Password">
                   </div>
                   <div class="mt-3">
-                      <input class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" value="SE CONNECTER"> 
+                      <input class="btn btn-block btn-dark btn-lg font-weight-medium auth-form-btn" type="submit" value="SE CONNECTER"> 
                   </div>
                   <div class="mt-3">
-                      <a href="<%= request.getContextPath() %>/user" ><btn class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" value="SE CONNECTER">USER SIDE </btn></a>
+                      <a href="<%= request.getContextPath() %>/user" ><btn class="btn btn-block btn-dark btn-lg font-weight-medium auth-form-btn" type="submit" value="SE CONNECTER">USER SIDE </btn></a>
                   </div>
                   <div class="text-center mt-4 font-weight-light">
                     

@@ -143,7 +143,7 @@ public class Util {
 
         // Vérifier si le jour est valide pour le mois donné
         if (jour < 1 || jour > joursParMois[mois]) {
-            throw new IllegalArgumentException("Jour invalide pour ce mois");
+            jour=joursParMois[mois];
         }
 
         return String.format("%04d-%02d-%02d", annee, mois, jour);

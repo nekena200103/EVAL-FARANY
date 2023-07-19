@@ -54,12 +54,13 @@ public class DepensesController extends DefaultController<Depenses>{
      
      for (String value : mycheckboxvalues) {
          int mois=Integer.parseInt(value);
-         String date=annee+"-"+(mois-1)+"-"+jour;
-         dep.setJour(Date.valueOf(date));
+         String date=annee+"-"+(mois)+"-"+jour;
+         
+         dep.setJour(Date.valueOf(Util.Util.dateCorrecte(jour, mois, annee)));
          ent.save(dep);
      
      }
-     return"create";
+     return "redirect:/"+classModel.getSimpleName().toLowerCase()+"/0";
      }
     @RequestMapping("/multi")
      public String insertionmultiples(Model map ) throws Exception{
@@ -123,7 +124,7 @@ public class DepensesController extends DefaultController<Depenses>{
 
         // ...
 
-        return "redirect:/success"; // Rediriger vers une autre page après le traitement du fichier.
+        return "redirect:/"+classModel.getSimpleName().toLowerCase()+"/0"; // Rediriger vers une autre page après le traitement du fichier.
     }
 
     // Méthode pour convertir la date au format java.sql.Date

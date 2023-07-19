@@ -50,9 +50,9 @@
             <div class="col-lg-4 mx-auto">
               <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                 <div class="brand-logo">
-                 <a class="navbar-brand" href="<%= request.getContextPath() %>/">Event<span>Madagascar. Employee Side</span></a>
+                 <a class="navbar-brand" href="<%= request.getContextPath() %>/">Event<span>Madagascar. User Side</span></a>
                 </div>
-                <h4>Hello! Commencons a planifier vos evenements (Employee)</h4>
+                <h4>Hello! </h4>
                 <h6 class="font-weight-light">Se connecter pour continuer</h6>
                 <form class="pt-3" action="<%= request.getContextPath() %>/connexutilisateur" method="GET">
                   <div class="form-group">
@@ -62,10 +62,10 @@
                     <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" name="password" placeholder="Password">
                   </div>
                   <div class="mt-3">
-                      <input class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" value="SE CONNECTER"> 
+                      <input class="btn btn-block btn-dark btn-lg font-weight-medium auth-form-btn" type="submit" value="SE CONNECTER"> 
                   </div>
                   <div class="mt-3">
-                      <a href="<%= request.getContextPath() %>/" ><btn class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">ADMIN  SIDE </btn></a>
+                      <a href="<%= request.getContextPath() %>/" ><btn class="btn btn-block btn-dark btn-lg font-weight-medium auth-form-btn">ADMIN  SIDE </btn></a>
                   </div>
                   <div class="text-center mt-4 font-weight-light">
                     
