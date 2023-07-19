@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * @author Nekena
  */
 public class CRUDGenservice {
-    public  String CONTEXT="/EssaiSpringMVC/";
+    public  String CONTEXT="/EVAL-FARANY/";
     DAService ent=new DAService();
     public  String generateHTMLTable(  ArrayList list,int numero,boolean misyariana) {
         StringBuilder htmlTable = new StringBuilder();

@@ -43,11 +43,13 @@
     %>
         
          <li class="nav-item active"><a href="<%= request.getContextPath() %>/acceuiladmin" class="nav-link" style="color: #fff;"><btn class="btn btn-dark py-3 px-5">Home</btn></a></li>
+         <li class="nav-item active"><a href="<%= request.getContextPath() %>/" class="nav-link" style="color: #fff;"><btn class="btn btn-dark py-3 px-5">Disconnect</btn></a></li>
     <%
             
         }else{%>
          <li class="nav-item active"><a href="<%= request.getContextPath() %>/indexuser" class="nav-link" style="color: #fff;"><btn class="btn btn-dark py-3 px-5">Home</btn></a></li>
-        <%}
+         <li class="nav-item active"><a href="<%= request.getContextPath() %>/user" class="nav-link" style="color: #fff;"><btn class="btn btn-dark py-3 px-5">Disconnect</btn></a></li>
+         <%}
     %>
 	          
 	          

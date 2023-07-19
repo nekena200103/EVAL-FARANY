@@ -31,14 +31,26 @@
     
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="<%= request.getContextPath() %>/assets/index.html">Clinique<span>Madagascar</span></a>
+	      <a class="navbar-brand" href="<%= request.getContextPath() %>/">Clinique<span>Madagascar</span></a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="<%= request.getContextPath() %>/acceuiladmin" class="nav-link">Home</a></li>
+	         <%String sessionao=(String)session.getAttribute("actuel");
+    if (sessionao.contains("admin")) {
+    %>
+        
+         <li class="nav-item active"><a href="<%= request.getContextPath() %>/acceuiladmin" class="nav-link" style="color: #fff;"><btn class="btn btn-dark py-3 px-5">Home</btn></a></li>
+         <li class="nav-item active"><a href="<%= request.getContextPath() %>/" class="nav-link" style="color: #fff;"><btn class="btn btn-dark py-3 px-5">Disconnect</btn></a></li>
+    <%
+            
+        }else{%>
+         <li class="nav-item active"><a href="<%= request.getContextPath() %>/indexuser" class="nav-link" style="color: #fff;"><btn class="btn btn-dark py-3 px-5">Home</btn></a></li>
+         <li class="nav-item active"><a href="<%= request.getContextPath() %>/user" class="nav-link" style="color: #fff;"><btn class="btn btn-dark py-3 px-5">Disconnect</btn></a></li>
+         <%}
+    %>
 	          
 
 	        </ul>
