@@ -59,7 +59,7 @@ public class CRUDGenservice {
                      .append(attributeName)
                      .append("</th>");
         }
-        htmlTable.append("<th>Supprimer</th><th>Modifier</th>");
+        htmlTable.append("<th>Supprimer</th>");
         // Fin de la construction du thead
         htmlTable.append("</tr>")
                  .append("</thead>");
@@ -93,7 +93,7 @@ public class CRUDGenservice {
                              .append(Util.Util.translateDate((Date)value)) // conversion éventuelle en chaîne de caractères
                              .append("</th>");
                     }else if(field.getType()==double.class){
-                         DecimalFormat format = new DecimalFormat("#,###.00");
+                         DecimalFormat format = new DecimalFormat("#,##0.00");
                     htmlTable.append("<th>")
                              .append(format.format(value)) // conversion éventuelle en chaîne de caractères
                              .append("</th>");
@@ -109,7 +109,7 @@ public class CRUDGenservice {
                 }
             }
             htmlTable.append("<th><a href='"+CONTEXT+objClass.getSimpleName().toLowerCase()+"/delete/"+id+"'><btn class=\"btn btn-danger py-3 px-5\" style='margin-left:10%;'>   Supprimer  </btn></a></th>");
-            htmlTable.append("<th><a href='"+CONTEXT+objClass.getSimpleName().toLowerCase()+"/update/"+id+"'><btn class=\"btn btn-warning py-3 px-5\" style='margin-left:10%;'>   Modifier  </btn></a></th>");
+            //htmlTable.append("<th><a href='"+CONTEXT+objClass.getSimpleName().toLowerCase()+"/update/"+id+"'><btn class=\"btn btn-warning py-3 px-5\" style='margin-left:10%;'>   Modifier  </btn></a></th>");
             htmlTable.append("</tr>");
         }
         

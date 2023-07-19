@@ -56,6 +56,9 @@ public abstract class DefaultController<M extends ObjetDao> {
         if (data2.size()>0) {
             mbolamisy=true;
         }
+        if (data.size()==0) {
+            return "redirect:/"+classModel.getSimpleName().toLowerCase()+"/create";
+        }
          andrana.setWhere(" limit 5 offset "+page*5);
         map.addAttribute("listetable",gen.generateHTMLTable(ent.find(andrana,tabbase.anarananatybase(),classModel),page,mbolamisy));
         return "read";
