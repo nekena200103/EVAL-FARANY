@@ -59,11 +59,11 @@
                   <h1 style="margin-left: 10%; margin-top: 2%; margin-right: 10%;">INSERER DE DEPENSES MULTIPLES</h1>
                   <div class="card-body">
                     <form action="<%= request.getContextPath() %>/depenses/insertion" method="post">
-                      <input type="number" name="montant" scale="0.001"  placeholder="Montant" required>
+                      <input type="text" name="montant"   placeholder="Montant" required>
                     </hr>
                       <input type="number" name="year"  placeholder="Annee" min="0" max="2060"required>
                     </hr>
-                    <input type="number" name="jour"  placeholder="Jour" min="0" max="30" required>
+                    <input type="number" name="jour"  placeholder="Jour" min="0" max="31" required>
                     </br>
                           <input type="checkbox" name="month" value="1">Janvier</input>
                     </br>
@@ -89,15 +89,8 @@
                         </br>
                           <input type="checkbox" name="month" value="12">Decembre</input>
                         </br>
-                        <select name='idtypecharge' class="form-control-sm" placeholder="Type de depenses"> 
-                        <%ArrayList<Typecharge>actelist=(ArrayList<Typecharge>)request.getAttribute("listtype");
-                            for (int idx = 0; idx < actelist.size(); idx++) {
-                                    %>
-                                    <option value="<%=actelist.get(idx).getIdtypecharge()%>" ><%=actelist.get(idx).getNom()%></option>
-                            <%
-                                
-                                }
-                        %>
+                        <input name='idtypecharge' type="text" class="form-control-sm" placeholder="Type de depenses"> 
+                        
                         
                       </select>
                     <hr>

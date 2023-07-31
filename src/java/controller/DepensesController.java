@@ -42,16 +42,50 @@ public class DepensesController extends DefaultController<Depenses>{
     }
     CRUDGenservice gen=new CRUDGenservice();
     @RequestMapping("/insertion")
-     public String insertionmultiples(@RequestParam(value="month",required=true)List<String> mycheckboxvalues,@RequestParam Map<String,String> allparams ) throws Exception{
+     public String insertionmultiples(Model map,@RequestParam(value="month",required=true)List<String> mycheckboxvalues,@RequestParam Map<String,String> allparams ) throws Exception{
+     
+     String error="";
      int jour=Integer.parseInt(allparams.get("jour"));
      int annee=Integer.parseInt(allparams.get("year"));
-     double montant=Double.valueOf(allparams.get("montant"));
-     Typecharge typecharge=new Typecharge();
-     typecharge.setIdtypecharge(allparams.get("idtypecharge"));
-     Depenses dep=new Depenses();
-     dep.setIdtypecharge(typecharge);
-     dep.setMontant(montant);
+     boolean erreurmontant=false;
+     boolean erreurtypedepense=false;
+     double montant=0.0;
+        try {
+            montant=Double.valueOf(allparams.get("montant"));
+        } catch (Exception e) {
+            error=error+"Valeur comportant du texte;";
+            System.out.println(error);
+            erreurmontant=true;
+        }
      
+        if (montant<0) {
+            error=error+"Valeur negatif;";
+            erreurmontant=true;
+            System.out.println(error);
+        }
+     Typecharge typecharge=new Typecharge();
+     typecharge.setWhere(" where code='"+allparams.get("idtypecharge")+"'");
+     ArrayList<Typecharge> typechargearray=ent.find(typecharge,"typecharge",Typecharge.class);
+        if (typechargearray.size()<=0) {
+            error=error+"CODE"+ allparams.get("idtypecharge")+" inexistant;";
+            erreurtypedepense=true;
+        }
+        
+     boolean misyve=false;
+     for (String value : mycheckboxvalues) {
+         int mois=Integer.parseInt(value);
+         if (Util.Util.datetsymilamina(jour,mois, annee)) {
+             misyve=true;
+             error=error+"Misy date tsy milamina ao;";
+             System.out.println(error);
+             
+         }
+         
+      }
+        if (misyve==false&&erreurmontant==false&&erreurtypedepense==false) {
+            Depenses dep=new Depenses();
+     dep.setIdtypecharge(typechargearray.get(0));
+     dep.setMontant(montant);
      for (String value : mycheckboxvalues) {
          int mois=Integer.parseInt(value);
          String date=annee+"-"+(mois)+"-"+jour;
@@ -61,6 +95,12 @@ public class DepensesController extends DefaultController<Depenses>{
      
      }
      return "redirect:/"+classModel.getSimpleName().toLowerCase()+"/0";
+     }else{
+            map.addAttribute("message",error);
+             return "error";
+        
+     }
+     
      }
     @RequestMapping("/multi")
      public String insertionmultiples(Model map ) throws Exception{

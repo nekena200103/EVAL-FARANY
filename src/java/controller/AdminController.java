@@ -93,6 +93,14 @@ public class AdminController {
         //mod.addAttribute("listetachespaginee",ent.getEntities(2, 1," ",Tachesequipe.class));
        return "logadmin";
     }
+     @RequestMapping(value="/chart")
+    public String  chart (Model mod) throws Exception{
+       // mod.addAttribute("listprojet",ent.find(new Projet(),"projet",Projet.class));
+        //mod.addAttribute("listequipe",ent.find(new Equipe(),"equipe",Equipe.class));
+       // mod.addAttribute("listetachespaginee",ent.find(new Tachesequipe(),"tachesequipe",Tachesequipe.class));
+        //mod.addAttribute("listetachespaginee",ent.getEntities(2, 1," ",Tachesequipe.class));
+       return "chartbory2";
+    }
      @RequestMapping(value="/tableaudebord")
     public String  tableau (Model mod,@RequestParam Map<String,String> parameterMap) throws Exception{
        // mod.addAttribute("listprojet",ent.find(new Projet(),"projet",Projet.class));

@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="entity.Actes"%>
 <%@page import="entity.Patient"%>
 <%@page import="entity.Artiste"%>
@@ -79,11 +80,12 @@
                          
                           <%for (int idx = 0; idx < patientarray.size(); idx++) {
                                 Actes elem =(Actes) patientarray.get(idx);
+                                DecimalFormat format = new DecimalFormat("#,##0.00");
                                %>
                                <tr>
                                <th><%=elem.getDescription()%></th>
-                               <th><%=elem.getMontant()%></th>
-                               <th><%=elem.getJour()%></th>
+                               <th><%=format.format(elem.getMontant())%></th>
+                               <th><%=Util.Util.translateDate(elem.getJour())%></th>
                                <th><%=elem.getIdtypeacte().getNom()%></th>
                                <th><%=elem.getIdpatient().getNom()%></th>
                                <th> <input type="checkbox" value="<%=elem.getIdactes()%>" name="listeacte"></th>

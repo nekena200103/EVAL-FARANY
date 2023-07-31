@@ -170,9 +170,8 @@ public abstract class DefaultController<M extends ObjetDao> {
             return "create";
         }
     }*/
-    
-    @RequestMapping(value = "/createnow", method = RequestMethod.POST)
-    public String traitementRequete(@RequestParam Map<String,String> parameterMap,@RequestParam(required=false) CommonsMultipartFile file,Model map) throws Exception{
+    @RequestMapping(value = "/updatenow", method = RequestMethod.POST)
+    public String traitementRequeteupdate(@RequestParam Map<String,String> parameterMap,@RequestParam(required=false) CommonsMultipartFile file,Model map) throws Exception{
   
     
     M model=instancing();
@@ -256,6 +255,119 @@ public abstract class DefaultController<M extends ObjetDao> {
                 
             }
         } else {
+            // Traitement pour les autres paramètres
+            
+                // Trouver le setter correspondant dans l'objet
+                String fieldName = paramName;
+                Class<?> fieldType = null;
+                 Field field = classModel.getDeclaredField(fieldName);
+                fieldType = field.getType();
+                String setterName = "set" + paramName.substring(0, 1).toUpperCase() + paramName.substring(1);
+                Method[] methodlist = classModel.getMethods();
+                 for (int j = 0; j < methodlist.length; j++) {
+                        
+                            if ((setterName).toLowerCase().contains(methodlist[j].getName().toLowerCase())) {
+                           
+                            methodlist[j].invoke(model,convertValue(paramValues, fieldType));
+                            }
+                
+                         }
+                
+                
+          
+        }
+        
+    }
+        ent.update(model);
+    return paginate(0,map); 
+}
+    @RequestMapping(value = "/createnow", method = RequestMethod.POST)
+    public String traitementRequete(@RequestParam Map<String,String> parameterMap,@RequestParam(required=false) CommonsMultipartFile file,Model map) throws Exception{
+  
+    
+    M model=instancing();
+    boolean misysary=false;
+    String nomfieldsary="";
+            int indicefield=0;
+            Field[] fieldlist=model.getClass().getDeclaredFields();
+            System.out.println(model.getClass());
+             for (int i = 0; i < fieldlist.length; i++) {
+                Field field = fieldlist[i];
+                System.out.println("set"+fieldlist[i].getName());
+                 MisyFile filemisy=field.getAnnotation(MisyFile.class);
+                 if (filemisy!=null) {
+                     misysary=true;
+                      
+                     indicefield=i;
+                     System.out.println("set"+fieldlist[indicefield].getName());
+                 }
+                
+            }
+            if(misysary==true){
+                byte[] bytes=file.getBytes();
+             Method[] methodlist=classModel.getMethods();
+             for (int i = 0; i < methodlist.length; i++) {
+                 System.out.println("set"+fieldlist[indicefield].toString());
+                 if (("set"+fieldlist[indicefield].getName()).toLowerCase().contains(methodlist[i].getName().toLowerCase())) {
+                     System.out.println("set"+fieldlist[indicefield].toString());
+                     nomfieldsary=fieldlist[indicefield].toString();
+                     methodlist[i].invoke(model,Util.Util.FtoBase64(bytes));
+                 }
+                
+            }
+            }
+    for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
+        String paramName =entry.getKey();
+        String paramValues = entry.getValue();
+        
+        
+        if (paramName.contains("selectobject")&& paramName.contains("file")==false ) {
+            // Traitement spécifique pour les paramètres contenant "selectobject"
+            String fieldName = paramName.substring(paramName.indexOf("selectobject") + "selectobject".length());
+            Class<?> fieldType = null;
+            try {
+                
+                Field field = classModel.getDeclaredField(fieldName);
+                fieldType = field.getType();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+            
+            if (fieldType != null) {
+                Object fieldValue = createInstance(fieldType);
+                Field[] fieldtab=fieldType.getDeclaredFields();
+                for (int i = 0; i < fieldtab.length; i++) {
+                    Field field = fieldtab[i];
+                    Annotationdebase annot=field.getAnnotation(Annotationdebase.class);
+                    
+                    if (annot.isprimarykey()==true) {
+                        Method[] methodlist=fieldValue.getClass().getMethods();
+                        for (int j = 0; j < methodlist.length; j++) {
+                        
+                            if (("set"+field.getName()).toLowerCase().contains(methodlist[j].getName().toLowerCase())) {
+                            System.out.println("set"+field.toString());
+                            methodlist[j].invoke(fieldValue,paramValues);
+                            }
+                
+                         }
+                    }
+                    
+                }
+                String setterName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                Method[] methodlist = classModel.getMethods();
+                 for (int j = 0; j < methodlist.length; j++) {
+                        
+                            if ((setterName).toLowerCase().contains(methodlist[j].getName().toLowerCase())) {
+                           
+                            methodlist[j].invoke(model,fieldValue);
+                            }
+                
+                         }
+                
+
+                
+            }
+        } else if(paramName.contains("file")==false) {
             // Traitement pour les autres paramètres
             
                 // Trouver le setter correspondant dans l'objet

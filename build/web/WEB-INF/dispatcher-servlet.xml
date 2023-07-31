@@ -26,6 +26,7 @@
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
     <mvc:resources mapping="/assets/**" location="/assets/" cache-period="31556926" />
     <mvc:resources mapping="/assets2/**" location="/assets2/" cache-period="31556926" />
+    
 <!--    <mvc:resources mapping="/WEB-INF/jsp/**" location="/WEB-INF/jsp/" cache-period="31556926" />-->
     <mvc:annotation-driven/>
 </beans>

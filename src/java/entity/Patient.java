@@ -22,10 +22,10 @@ public class Patient extends ObjetDao{
     String nom ;
     @Annotationdebase(isprimarykey = false,nomtable="",nomdelacolonne="",reconnaissance =false)
     Date datenaissance;
-    @Annotationdebase(isprimarykey = false,nomtable="Genre",nomdelacolonne="idgenre",reconnaissance =false)
-    Genre idgenre;
     @Annotationdebase(isprimarykey = false,nomtable="Remboursement",nomdelacolonne="idremboursement",reconnaissance =false)
     Remboursement idremboursement;
+    @Annotationdebase(isprimarykey = false,nomtable="Genre",nomdelacolonne="idgenre",reconnaissance =false)
+    Genre idgenre;
 
     public String getIdpatient() {
         return idpatient;
@@ -51,14 +51,6 @@ public class Patient extends ObjetDao{
         this.datenaissance = datenaissance;
     }
 
-    public Genre getIdgenre() {
-        return idgenre;
-    }
-
-    public void setIdgenre(Genre idgenre) {
-        this.idgenre = idgenre;
-    }
-
     public Remboursement getIdremboursement() {
         return idremboursement;
     }
@@ -67,7 +59,13 @@ public class Patient extends ObjetDao{
         this.idremboursement = idremboursement;
     }
 
-    
+    public Genre getIdgenre() {
+        return idgenre;
+    }
+
+    public void setIdgenre(Genre idgenre) {
+        this.idgenre = idgenre;
+    }
 
     public String getWhere() {
         return where;
@@ -76,6 +74,9 @@ public class Patient extends ObjetDao{
     public void setWhere(String where) {
         this.where = where;
     }
+    
+
+    
 
    
 }

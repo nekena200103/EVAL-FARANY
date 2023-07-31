@@ -59,7 +59,7 @@ public class CRUDGenservice {
                      .append(attributeName)
                      .append("</th>");
         }
-        htmlTable.append("<th>Supprimer</th>");
+        htmlTable.append("<th>Supprimer</th><th>Modifier</th>");
         // Fin de la construction du thead
         htmlTable.append("</tr>")
                  .append("</thead>");
@@ -109,7 +109,7 @@ public class CRUDGenservice {
                 }
             }
             htmlTable.append("<th><a href='"+CONTEXT+objClass.getSimpleName().toLowerCase()+"/delete/"+id+"'><btn class=\"btn btn-danger py-3 px-5\" style='margin-left:10%;'>   Supprimer  </btn></a></th>");
-            //htmlTable.append("<th><a href='"+CONTEXT+objClass.getSimpleName().toLowerCase()+"/update/"+id+"'><btn class=\"btn btn-warning py-3 px-5\" style='margin-left:10%;'>   Modifier  </btn></a></th>");
+            htmlTable.append("<th><a href='"+CONTEXT+objClass.getSimpleName().toLowerCase()+"/update/"+id+"'><btn class=\"btn btn-warning py-3 px-5\" style='margin-left:10%;'>   Modifier  </btn></a></th>");
             htmlTable.append("</tr>");
         }
         
@@ -201,13 +201,17 @@ public class CRUDGenservice {
         String fieldName = field.getName();
         String fieldType = field.getType().getSimpleName();
         Annotationdebase annotdebase=field.getAnnotation(Annotationdebase.class);
-        if (annotdebase.isprimarykey()==false) {
+        if (annotdebase.isprimarykey()!=false) {
+        Method getteur=object.getClass().getDeclaredMethod("get"+fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1));
+        String value=(String)getteur.invoke(object).toString();
+        formBuilder.append("<input class=\"form-control\" style='opacity:0%;z-index:-9;' value=\"").append(value).append("\" placeholder=\"").append(value+":"+fieldName).append("\" type=\"text\" name=\"").append(fieldName).append("\" id=\"").append(fieldName).append("\" required><br>");
+        }else if (annotdebase.isprimarykey()==false) {
         Method getteur=object.getClass().getDeclaredMethod("get"+fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1));
         String value=(String)getteur.invoke(object).toString();
         
 
         if (fieldType.equals("int")) {
-            formBuilder.append("<input class=\"form-control\" default=\"").append(value).append("\" placeholder=\"").append(value+":"+fieldName).append("\" type=\"number\" name=\"").append(fieldName).append("\" id=\"").append(fieldName).append("\" required><br>");
+            formBuilder.append("<input class=\"form-control\" value=\"").append(value).append("\" placeholder=\"").append(value+":"+fieldName).append("\" type=\"number\" name=\"").append(fieldName).append("\" id=\"").append(fieldName).append("\" required><br>");
         } else if (fieldType.equals("String")) {
             boolean misyfile=false;
         
@@ -216,18 +220,18 @@ public class CRUDGenservice {
                 misyfile=true;
             }
             if (misyfile==true) {
-                formBuilder.append("<input class=\"form-control\" default=\"").append(value).append("\" placeholder=\"").append(value+":"+fieldName).append("\" type=\"file\" name='file' id=\"").append(fieldName).append("\" required><br>");
+                formBuilder.append("<input class=\"form-control\" value=\"").append(value).append("\" placeholder=\"").append(value+":"+fieldName).append("\" type=\"file\" name='file' id=\"").append(fieldName).append("\" required><br>");
             }else{
-                formBuilder.append("<input  class=\"form-control\" default=\"").append(value).append("\" placeholder=\"").append(value+":"+fieldName).append("\" type=\"text\" name=\"").append(fieldName).append("\" id=\"").append(fieldName).append("\" required><br>");
+                formBuilder.append("<input  class=\"form-control\" value=\"").append(value).append("\" placeholder=\"").append(value+":"+fieldName).append("\" type=\"text\" name=\"").append(fieldName).append("\" id=\"").append(fieldName).append("\" required><br>");
             }
             
         
             
         } else if(fieldType.equals("double")){
-                formBuilder.append("<input  class=\"form-control\" default=\"").append(value).append("\" placeholder=\"").append(value+":"+fieldName).append("\" type=\"number\" name=\"").append(fieldName).append("\" step='0.01'id=\"").append(fieldName).append("\" required><br>");
+                formBuilder.append("<input  class=\"form-control\" value=\"").append(value).append("\" placeholder=\"").append(value+":"+fieldName).append("\" type=\"number\" name=\"").append(fieldName).append("\" step='0.01'id=\"").append(fieldName).append("\" required><br>");
         }
         else if(fieldType.equals("Date")){
-                formBuilder.append("<input  class=\"form-control\" default=\"").append(value).append("\" placeholder=\"").append(value+":"+fieldName).append("\" type=\"date\" name=\"").append(fieldName).append("\" id=\"").append(fieldName).append("\" required><br>");
+                formBuilder.append("<input  class=\"form-control\" value=\"").append(value).append("\" placeholder=\"").append(value+":"+fieldName).append("\" type=\"date\" name=\"").append(fieldName).append("\" id=\"").append(fieldName).append("\" required><br>");
         }else {
                 try {
                     
@@ -235,7 +239,7 @@ public class CRUDGenservice {
                     System.out.println(class2.getSimpleName());
                     TableBase nomdetable=class2.getAnnotation(TableBase.class);
                     ArrayList<?> listofoption=ent.find(field.getType().newInstance(),nomdetable.anarananatybase(), class2);
-                    formBuilder.append("<select class=\"form-control\" default=\"").append(value).append("\" placeholder=\"").append(value+":"+fieldName).append("\" name='selectobject").append(fieldName).append("' id=\"").append(fieldName).append("\" required>");
+                    formBuilder.append("<select class=\"form-control\" value=\"").append(value).append("\" placeholder=\"").append(value+":"+fieldName).append("\" name='selectobject").append(fieldName).append("' id=\"").append(fieldName).append("\" required>");
                     for (int i = 0; i < listofoption.size(); i++) {
                         ObjetDao get =(ObjetDao) listofoption.get(i);
                         formBuilder.append("<option value=\"").append(get.makaprimarykey()).append("\">").append(get.toString()).append("</option>");

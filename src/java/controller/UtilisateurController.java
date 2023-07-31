@@ -22,6 +22,7 @@ import entity.Actes;
 import entity.Admin;
 import entity.Artiste;
 import entity.Patient;
+import entity.Typeacte;
 import entity.Utilisateur;
 
 
@@ -30,7 +31,6 @@ import java.io.FileOutputStream;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -144,10 +144,18 @@ public class UtilisateurController {
               // Ajout d'une seule ligne avec des valeurs aléatoires
               String nomdupatient="";
             double totalapayer=0.0;
+            double totalremboursement=0;
             DecimalFormat format = new DecimalFormat("#,###.00");
+            Patient patient=new Patient();
+            String datedefacturation="";
             for (int i = 0; i < actesarray.size(); i++) {
                 Actes get = actesarray.get(i);
                 table.addCell(get.getDescription());
+                patient=get.getIdpatient();
+                datedefacturation=get.getJour().toString();
+                if (get.getIdpatient().getIdremboursement().getIdremboursement().contains("1")) {
+                    totalremboursement=totalremboursement+(get.getMontant()*0.2);
+                }
             table.addCell(get.getIdpatient().getNom());
             table.addCell(format.format(get.getMontant())+" Ariary"); // Montant aléatoire entre 0 et 100
             table.addCell(Util.Util.translateDate((Date)get.getJour()));
@@ -164,7 +172,11 @@ public class UtilisateurController {
             Paragraph titre = new Paragraph("Patient: "+nomdupatient,largeFront);
             titre.setAlignment(Paragraph.ALIGN_CENTER);
             titre.setSpacingAfter(20);
-            Paragraph total = new Paragraph("TOTAL A PAYER: "+totalapayer+ "  Ar",largeFront);
+            Paragraph total = new Paragraph("TOTAL A PAYER: "+(totalapayer+(int)totalremboursement)+ "  Ar",largeFront);
+            total.setAlignment(Paragraph.ALIGN_CENTER);
+            Paragraph majoration = new Paragraph("MAJORATION: "+format.format(totalremboursement)+ "  Ar",largeFront);
+            majoration.setAlignment(Paragraph.ALIGN_CENTER);
+            majoration.setSpacingAfter(20);
             total.setAlignment(Paragraph.ALIGN_CENTER);
             total.setSpacingAfter(20);
             paragraph.setSpacingBefore(150);
@@ -175,7 +187,18 @@ public class UtilisateurController {
             // Ajout du tableau au document
             document.add(table);
             document.add(total);
-
+            document.add(majoration);
+                if (totalremboursement>0.0) {
+                    Actes actevao2=new Actes();
+                    Typeacte actes=new Typeacte();
+                    actes.setIdtypeacte("t19");
+                    actevao2.setIdtypeacte(actes);
+                    actevao2.setMontant((int)totalremboursement);
+                    actevao2.setJour(Date.valueOf(datedefacturation));
+                    actevao2.setDescription("remboursement");
+                    actevao2.setIdpatient(patient);
+                    ent.save(actevao2);
+                }
             // Fermeture du document
             document.close();
             byte[] pdfBytes = baos.toByteArray();

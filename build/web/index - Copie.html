@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exemple de diagramme en bâton avec légendes</title>
+    <script src="chartjs/Chart.min.js"></script>
+</head>
+<body>
+    <canvas id="barChart" width="400" height="400"></canvas>
+
+    <script>
+        // Données du diagramme en bâton
+        var data = {
+            labels: ["Catégorie 1", "Catégorie 2", "Catégorie 3"],
+            datasets: [
+                {
+                    label: "Données",
+                    fillColor: "#46BFBD",
+                    strokeColor: "#46BFBD",
+                    highlightFill: "#5AD3D1",
+                    highlightStroke: "#5AD3D1",
+                    data: [30, 50, 20]
+                }
+            ]
+        };
+
+        // Options du diagramme en bâton
+        var options = {
+            responsive: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontColor: '#000', // Couleur de la police des étiquettes de l'axe y
+                        fontSize: 14       // Taille de la police des étiquettes de l'axe y
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: '#000', // Couleur de la police des étiquettes de l'axe x
+                        fontSize: 14       // Taille de la police des étiquettes de l'axe x
+                    }
+                }]
+            },
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    fontColor: '#000', // Couleur de la police des légendes
+                    fontSize: 14       // Taille de la police des légendes
+                }
+            }
+        };
+
+        // Créer le diagramme en bâton
+        var ctx = document.getElementById("barChart").getContext("2d");
+        var myBarChart = new Chart(ctx).Bar(data, options);
+    </script>
+</body>
+</html>

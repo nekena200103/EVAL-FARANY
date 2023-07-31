@@ -148,6 +148,26 @@ public class Util {
 
         return String.format("%04d-%02d-%02d", annee, mois, jour);
     }
+    public static boolean datetsymilamina(int jour, int mois, int annee) {
+        int[] joursParMois = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+        // Vérifier si l'année est bissextile pour mettre à jour le nombre de jours de février
+        if (estBissextile(annee)) {
+            joursParMois[2] = 29;
+        }
+
+        // Vérifier si le mois est valide (entre 1 et 12)
+        if (mois < 1 || mois > 12) {
+            throw new IllegalArgumentException("Mois invalide");
+        }
+
+        // Vérifier si le jour est valide pour le mois donné
+        if (jour < 1 || jour > joursParMois[mois]) {
+            return true;
+        }
+
+        return false;
+    }
 
    
 

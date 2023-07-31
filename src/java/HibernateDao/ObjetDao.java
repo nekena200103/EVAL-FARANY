@@ -633,7 +633,7 @@ public static  void insererdansuneTable(Connection co,Object objet,String nomdeb
                                                                                                         if (listfonction[k].getName().toLowerCase().contains("get"+base.nomdelacolonne().toLowerCase())) {
                                                                                                            
                                                                                                             String idapetaka=(String)listfonction[k].invoke(obj);
-                                                                                                             
+                                                                                                            System.out.println(listfonction[k].invoke(obj));
                                                                                                             sql2=sql2.concat("'"+idapetaka+"',");
                                                                                                             break;
                                                                                                         }
